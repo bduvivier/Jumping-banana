@@ -3,13 +3,21 @@
 #include <stdbool.h>
 
 #include "loadMap.h"
+#include "changerNiveau.h"
+
 
 
 bool loadMap(char map[MaxX][MaxY])		/*fonction qui ouvre le fichier txt et charge la carte dans le tableau*/
 {
     FILE *f = NULL;
+
+    if (niveau==1)              /*charge le niveau 1 si niveau=1*/
     f = fopen("map.txt", "r");
-    if(f == NULL)
+
+    else if (niveau == 2)      /*charge le niveau 2 si niveau=2*/
+    f = fopen("map2.txt", "r");
+
+    if(f == NULL)            /*envoie un message d'erreur si le fichier est vide*/
     {
         printf("file empty");
         return false;

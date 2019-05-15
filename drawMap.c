@@ -10,6 +10,7 @@
 #include "drawMap.h"
 #include "personnage.h"
 
+
 void drawWall(char map[MaxX][MaxY])			/*fonction qui affiche les murs et les plateformes*/
 {
 	for (int j = 0; j < MaxX; j++)        /*boucle pour afficher ligne par ligne*/
@@ -20,8 +21,9 @@ void drawWall(char map[MaxX][MaxY])			/*fonction qui affiche les murs et les pla
 			{
 				glColor3f(0.5f,1.0f,0.5f);         /*couleur du mur(vert ici*/
 				glMatrixMode(GL_MODELVIEW);
-				glLoadIdentity();
-				glTranslatef(i*Square_size,j*Square_size,0.0f); /* pour le mettre à l'endroit*/
+        glPopMatrix();
+		    glPushMatrix();
+				glTranslatef(i*Square_size,j*Square_size,0.0f); /* pour le mettre à la bonne position*/
 
 				glBegin(GL_QUADS);               /*commencement de la création d'un carré*/
 				glVertex2f(0.0f, 0.0f);          /*dessine un point à la coordonnée (0,0), et le relie aux suivant*/
@@ -34,7 +36,8 @@ void drawWall(char map[MaxX][MaxY])			/*fonction qui affiche les murs et les pla
 			{
 				glColor3f(0.647059f,0.164706f,0.164706f);
 				glMatrixMode(GL_MODELVIEW);
-				glLoadIdentity();
+        glPopMatrix();
+		    glPushMatrix();
 				glTranslatef(i*Square_size, j*Square_size,0.0f);
 
 				glBegin(GL_QUADS);
@@ -56,10 +59,11 @@ void Dessiner_singe (char map [MaxX][MaxY]){   /*idem, mais pour le personnage e
 			{
         glColor3f(1.0f,0.5f,0.0f);
 				glMatrixMode(GL_MODELVIEW);
-				glLoadIdentity();
+				glPopMatrix();
+		    glPushMatrix();
 				glTranslatef(i*Square_size, j*Square_size,0.0f);
-				glBegin(GL_POLYGON);
 
+				glBegin(GL_POLYGON);
 				glVertex2f(0.0f,0.0f);
 				glVertex2f(Square_size, 0.0f);
 				glVertex2f(Square_size, Square_size);
@@ -71,6 +75,9 @@ void Dessiner_singe (char map [MaxX][MaxY]){   /*idem, mais pour le personnage e
 }
 
 void Dessiner_bananes (char map[MaxX][MaxY]){   /*idem mais pour les bannanes (triangles minuscules)*/
+
+	nbre_bananes = 0;			/*initialise le compteur du nombre de bananes présentes dans le niveau à 0*/
+
 	for (int j = 0; j < MaxX; j++)
 	{
 		for (int i = 0; i < MaxY; i++)
@@ -78,7 +85,8 @@ void Dessiner_bananes (char map[MaxX][MaxY]){   /*idem mais pour les bannanes (t
 			if (map[j][i]== '0'){
 				glColor3f(1.0f,0.5f,0.0f);
 				glMatrixMode(GL_MODELVIEW);
-				glLoadIdentity();
+				glPopMatrix();
+		    glPushMatrix();
 				glTranslatef(i*Square_size, j*Square_size,0.0f);
 
 				glBegin(GL_TRIANGLES);
@@ -86,13 +94,16 @@ void Dessiner_bananes (char map[MaxX][MaxY]){   /*idem mais pour les bannanes (t
 				glVertex2f(16.0f,0.0f);
 				glVertex2f(13.0f,13.0f);
 				glEnd();
-
+				nbre_bananes++;  /*incrémente la variable à chaque fois que la fonction trouve une banane dans le niveau*/
 			}
 		}
 	}
 }
 
 void Dessiner_ennemis (char map [MaxX][MaxY]){ /*idem mais pour les ennemis en rouge*/
+
+	nbre_ennemis = 0;              /*initialise le compteur du nombre d'ennemis présents dans le niveau à 0*/
+
 	for (int j = 0; j < MaxX; j++)
  {
 	 for (int i = 0; i < MaxY; i++)
@@ -101,15 +112,17 @@ void Dessiner_ennemis (char map [MaxX][MaxY]){ /*idem mais pour les ennemis en r
 
 			 glColor3f(1.0f,0.0f,0.0f);
 			 glMatrixMode(GL_MODELVIEW);
-			 glLoadIdentity();
+			 glPopMatrix();
+	     glPushMatrix();
 			 glTranslatef(i*Square_size, j*Square_size,0.0f);
-			 glBegin(GL_POLYGON);
 
+			 glBegin(GL_POLYGON);
 			 glVertex2f(0.0f,0.0f);
 			 glVertex2f(Square_size, 0.0f);
 			 glVertex2f(Square_size, Square_size);
 			 glVertex2f(0.0f, Square_size);
 			 glEnd();
+			 nbre_ennemis++;             /*compte le nombre d'ennemis présents dans le niveau*/
 		 }
 		}
 	}

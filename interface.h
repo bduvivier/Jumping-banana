@@ -1,5 +1,5 @@
-#ifndef _INTEFACE_H_
-#define _INTEFACE_H_
+#ifndef _INTERFACE_H_
+#define _INTERFACE_H_
 
 
 
